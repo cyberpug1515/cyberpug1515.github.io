@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data breaches,Corporate responsibilities and Phishing | Cybersecurity Project</title>
+<link rel="preconnect" href="https://googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link href="https://googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+.corner-lily {
+  position: absolute;
+  width: 115px;
+  height: 115px;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.corner-lily.top-left { top: 6px; left: 8px; }
+.corner-lily.bottom-right { bottom: 6px; right: 8px; transform: rotate(180deg); }
+@media (max-width: 640px) { .corner-lily { width: 75px; height: 75px; } }
+
+  /* COLORS: Pastel Pink & Warm Cream Palette + Complementary Dark Mode */
+  :root {
+    --bg:#1f151b; --surface:#2b1e26; --surface2:#382731; --text:#fff5e4; --muted:#dec7cf;
+    --accent:#ffc8d9; --accent-ink:#3b1826; --attack:#ff7b89; --attack-bg:#471d26; --defense:#68d391; --defense-bg:#1b3b2b; --line:#523947;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg:#fff5e4; --surface:#ffe8c4; --surface2:#fdd6dd; --text:#381c26; --muted:#6e4755;
+      --accent:#c94a72; --accent-ink:#fff5e4; --attack:#b8253b; --attack-bg:#ffc8d9; --defense:#1f7a4c; --defense-bg:#e2f5ea; --line:#e8bcc7;
+    }
+  }
+  [data-theme="light"] {
+    --bg:#fff5e4; --surface:#ffe8c4; --surface2:#fdd6dd; --text:#381c26; --muted:#6e4755;
+    --accent:#c94a72; --accent-ink:#fff5e4; --attack:#b8253b; --attack-bg:#ffc8d9; --defense:#1f7a4c; --defense-bg:#e2f5ea; --line:#e8bcc7;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height:1.65; font-size:1.05rem; }
+  a { color:var(--accent); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  #progress { position:fixed; top:0; left:0; height:4px; width:0; background:var(--accent); z-index:50; }
+  .topbar { position:sticky; top:0; z-index:40; display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1.2rem; padding:.6rem 1.2rem; background:var(--surface); border-bottom:1px solid var(--line); }
+  .topbar a { text-decoration:none; font-weight:600; font-size:.95rem; color:var(--text); padding:.2rem .1rem; border-bottom:2px solid transparent; }
+  .topbar a:hover, .topbar a.active { border-bottom-color:var(--accent); }
+  .topbar button { margin-left:auto; }
+  button { font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--surface2); color:var(--text); padding:.4rem .9rem; border-radius:999px; }
+  button:hover { border-color:var(--accent); }
+  button.primary { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); font-weight:700; }
+
+  .hero { position:relative; overflow:hidden; padding:4.5rem 1.2rem 3.5rem; background:
+      radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 45%),
+      repeating-linear-gradient(0deg, transparent 0 39px, color-mix(in srgb, var(--accent) 10%, transparent) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, color-mix(in srgb, var(--accent) 10%, transparent) 39px 40px),
+      var(--bg); border-bottom:1px solid var(--line); }
+  .wrap { max-width:860px; margin:0 auto; }
+  .hero .wrap { padding-right:clamp(0px, 15vw, 190px); }
+  .hero h1 {
+  font-family: 'Fuzzy Bubbles', 'Bradley Hand', 'Chalkboard SE', Georgia, serif;
+  font-weight: 700;
+  color: #3d231a; /* Cute dark chocolate brown */
+  font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+  line-height: 1.2;
+  margin: .2rem 0 .8rem;
+  letter-spacing: 0;
+}
+  .byline { color:var(--muted); margin:0 0 1.2rem; }
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:0; padding:0; list-style:none; }
+  .chips li { border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:.25rem .8rem; font-size:.9rem; }
+  .chips li b { color:var(--accent); font-weight:700; }
+  .shield { position:absolute; right:4%; top:50%; transform:translateY(-50%); width:clamp(90px,16vw,170px); opacity:.9; }
+  @media (max-width:640px) { .shield { display:none; } }
+  main.wrap { padding:2rem 1.2rem 3rem; }
+  section.card { background:var(--surface); border:1px solid var(--line); border-left:6px solid var(--accent); border-radius:12px; padding:1.2rem 1.5rem 1.4rem; margin:1.6rem 0; }
+  section.card.attack-card { border-left-color:var(--attack); }
+  section.card.defense-card { border-left-color:var(--defense); }
+  section.card h2 { margin:.2rem 0 .6rem; font-size:1.6rem; }
+  h3 { margin:1.2rem 0 .3rem; }
+  .keyidea { background:var(--surface2); border-radius:10px; padding:.8rem 1rem; margin:1rem 0 0; }
+  .tag { display:inline-block; padding:.1rem .7rem; border-radius:6px; font-weight:700; font-size:.9rem; margin-right:.4rem; }
+  .tag.attack { background:var(--attack-bg); color:var(--attack); border:1px solid var(--attack); }
+  .tag.defense { background:var(--defense-bg); color:var(--defense); border:1px solid var(--defense); }
+  figure { margin:1.2rem 0; }
+  figure img { display:block; width:100%; height:auto; border-radius:10px; border:1px solid var(--line); background:var(--surface2); }
+  figcaption { color:var(--muted); font-size:.92rem; margin-top:.5rem; }
+  /* stepper */
+  .stepper { list-style:none; margin:1rem 0; padding:0; }
+  .stepper li { display:grid; grid-template-columns:2.4rem 1fr; gap:.8rem; padding:.7rem .8rem; border-radius:10px; border:1px solid transparent; cursor:pointer; }
+  .stepper li .dot { width:2.2rem; height:2.2rem; border-radius:50%; display:grid; place-items:center; font-weight:700; background:var(--attack-bg); color:var(--attack); border:2px solid var(--attack); }
+  .stepper li.defense .dot { background:var(--defense-bg); color:var(--defense); border-color:var(--defense); }
+  .stepper li.active { background:var(--surface2); border-color:var(--line); }
+  .stepper li:not(.active) .detail { display:none; }
+  .stepper li strong { display:block; }
+  .stepper-controls { display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; }
+  .stepper-controls .count { color:var(--muted); font-size:.92rem; }
+  /* checklist + quiz */
+  .todo { list-style:none; padding:0; margin:.4rem 0; }
+  .todo li { margin:.4rem 0; }
+  .todo label { display:flex; gap:.7rem; align-items:flex-start; cursor:pointer; }
+  .todo input { margin-top:.45rem; width:1.1rem; height:1.1rem; accent-color:var(--defense); }
+  .todo-status { font-weight:700; color:var(--defense); }
+  .q { border:1px solid var(--line); border-radius:10px; padding:1rem 1.1rem; margin:1rem 0; background:var(--surface2); }
+  .q p { margin:.2rem 0 .7rem; }
+  .opts { display:grid; gap:.5rem; }
+  .opts button { text-align:left; border-radius:10px; }
+  .opts button.right { background:var(--defense-bg); border-color:var(--defense); color:var(--text); }
+  .opts button.wrong { background:var(--attack-bg); border-color:var(--attack); color:var(--text); }
+  .why { margin:.7rem 0 0; font-size:.97rem; color:var(--muted); }
+  .score { font-weight:700; }
+  ol.sources li { margin:.5rem 0; overflow-wrap:anywhere; }
+  .checker { border:2px dashed var(--line); border-radius:12px; padding:1rem 1.3rem; margin:2rem 0; }
+  .checker ul { list-style:none; padding:0; margin:.8rem 0 0; }
+  .checker li { margin:.3rem 0; }
+  .ok { color:var(--defense); font-weight:700; } .bad { color:var(--attack); font-weight:700; }
+  footer { border-top:1px solid var(--line); color:var(--muted); font-size:.92rem; padding:1.5rem 1.2rem 3rem; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+#sources {
+  color: #381c26;
+  background-color: #fffdf0;
+  background-image: repeating-conic-gradient(#ffeff4 0% 25%, #fffdf0 0% 50%);
+  background-size: 44px 44px;
+}
+
+#sources a {
+  color: #b8325a;
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<!-- EDITING HELP: see Step 6 in Canvas. To add a section to this menu, add a link like <a href="#mysection">My Section</a> and give your <section> the same id, id="mysection". -->
+<nav class="topbar" aria-label="Page sections">
+  <a href="#intro">Intro🌸</a>
+  <a href="#ethics">Ethics✰</a>
+  <a href="#attack">Attack🌸</a>
+  <a href="#protection">Protection✰</a>
+  <a href="#secplus">Security+🌸</a>
+  <a href="#sources">Sourcesִֶ✰</a>
+  <span class="nav-flowers" aria-hidden="true">🌸 ✰ 🌸 ✰ 🌸</span>
+  <button id="themeBtn" type="button" aria-label="Switch between dark and light mode">Dark / Light</button>
+</nav>
+
+<header class="hero">
+<header class="hero">
+  <!-- Realistic Botanical Pink Lilies -->
+  <svg class="corner-lily top-left" viewBox="0 0 200 200" aria-hidden="true">
+    <defs>
+      <!-- Soft pink-to-white-to-cream petal shading -->
+      <radialGradient id="petalGradBack" cx="50%" cy="85%" r="80%">
+        <stop offset="0%" stop-color="#f7f4c8"/>
+        <stop offset="22%" stop-color="#f3a6c4"/>
+        <stop offset="65%" stop-color="#fbd6e4"/>
+        <stop offset="100%" stop-color="#fff8fb"/>
+      </radialGradient>
+      <radialGradient id="petalGradFront" cx="50%" cy="88%" r="82%">
+        <stop offset="0%" stop-color="#f5f1b8"/>
+        <stop offset="25%" stop-color="#f7b3ce"/>
+        <stop offset="68%" stop-color="#fde2ec"/>
+        <stop offset="100%" stop-color="#ffffff"/>
+      </radialGradient>
+      <radialGradient id="throatGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#eef0a8" stop-opacity="0.95"/>
+        <stop offset="65%" stop-color="#f4a8c6" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Reusable realistic pointed lily petal -->
+      <g id="lilyPetalBack">
+        <path d="M0,0 C-18,-26 -28,-66 0,-94 C28,-66 18,-26 0,0 Z" fill="url(#petalGradBack)" stroke="#eab7cb" stroke-width="0.7"/>
+        <path d="M0,-6 C-1,-35 -1,-65 0,-90" stroke="#e48eb0" stroke-width="0.9" stroke-opacity="0.45" fill="none"/>
+        <path d="M-3,-18 C-9,-40 -10,-62 -6,-78 M3,-18 C9,-40 10,-62 6,-78" stroke="#e89bb9" stroke-width="0.5" stroke-opacity="0.35" fill="none"/>
+      </g>
+      <g id="lilyPetalFront">
+        <path d="M0,0 C-21,-28 -30,-70 0,-98 C30,-70 21,-28 0,0 Z" fill="url(#petalGradFront)" stroke="#f0c4d5" stroke-width="0.8"/>
+        <path d="M0,-5 C0,-38 0,-68 0,-94" stroke="#e389ac" stroke-width="1" stroke-opacity="0.5" fill="none"/>
+        <path d="M-4,-16 C-11,-42 -12,-64 -7,-82 M4,-16 C11,-42 12,-64 7,-82" stroke="#eb9fbb" stroke-width="0.55" stroke-opacity="0.35" fill="none"/>
+        <!-- Subtle freckle spots near throat -->
+        <circle cx="-4" cy="-24" r="0.9" fill="#c95b84" fill-opacity="0.45"/>
+        <circle cx="5" cy="-27" r="0.8" fill="#c95b84" fill-opacity="0.4"/>
+        <circle cx="-2" cy="-33" r="0.8" fill="#c95b84" fill-opacity="0.35"/>
+        <circle cx="3" cy="-20" r="0.9" fill="#c95b84" fill-opacity="0.45"/>
+      </g>
+    </defs>
+    <g transform="translate(100,102)">
+      <!-- 3 Outer/Back Petals -->
+      <use href="#lilyPetalBack" transform="rotate(-55) scale(0.94)"/>
+      <use href="#lilyPetalBack" transform="rotate(65) scale(0.94)"/>
+      <use href="#lilyPetalBack" transform="rotate(185) scale(0.94)"/>
+      <!-- 3 Inner/Front Petals -->
+      <use href="#lilyPetalFront" transform="rotate(5)"/>
+      <use href="#lilyPetalFront" transform="rotate(125)"/>
+      <use href="#lilyPetalFront" transform="rotate(245)"/>
+
+      <!-- Soft Greenish-Yellow Center Throat -->
+      <circle r="20" fill="url(#throatGlow)"/>
+
+      <!-- Delicate Curved Stamens & Golden-Brown Anthers -->
+      <g stroke="#d9e09b" stroke-width="1.3" fill="none" stroke-linecap="round">
+        <path d="M0,0 Q-14,-18 -22,-32"/>
+        <path d="M0,0 Q15,-16 25,-28"/>
+        <path d="M0,0 Q20,10 32,16"/>
+        <path d="M0,0 Q-18,14 -28,24"/>
+        <path d="M0,0 Q-2,-22 -4,-36"/>
+      </g>
+      <!-- Pollen Anthers -->
+      <ellipse cx="-22" cy="-32" rx="4.2" ry="2.1" transform="rotate(-35 -22 -32)" fill="#b87b1e"/>
+      <ellipse cx="25" cy="-28" rx="4.2" ry="2.1" transform="rotate(35 25 -28)" fill="#b87b1e"/>
+      <ellipse cx="32" cy="16" rx="4.2" ry="2.1" transform="rotate(25 32 16)" fill="#b87b1e"/>
+      <ellipse cx="-28" cy="24" rx="4.2" ry="2.1" transform="rotate(-40 -28 24)" fill="#b87b1e"/>
+      <ellipse cx="-4" cy="-36" rx="4.2" ry="2.1" transform="rotate(80 -4 -36)" fill="#b87b1e"/>
+      <!-- Center Pistil -->
+      <path d="M0,0 Q4,-12 8,-22" stroke="#c5d483" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <circle cx="8" cy="-22" r="2.6" fill="#e5ebb2"/>
+    </g>
+  </svg>
+
+  <!-- Bottom-right matching lily (reuses the same gradients & petals!) -->
+  <svg class="corner-lily bottom-right" viewBox="0 0 200 200" aria-hidden="true">
+    <g transform="translate(100,102)">
+      <use href="#lilyPetalBack" transform="rotate(-55) scale(0.94)"/>
+      <use href="#lilyPetalBack" transform="rotate(65) scale(0.94)"/>
+      <use href="#lilyPetalBack" transform="rotate(185) scale(0.94)"/>
+      <use href="#lilyPetalFront" transform="rotate(5)"/>
+      <use href="#lilyPetalFront" transform="rotate(125)"/>
+      <use href="#lilyPetalFront" transform="rotate(245)"/>
+      <circle r="20" fill="url(#throatGlow)"/>
+      <g stroke="#d9e09b" stroke-width="1.3" fill="none" stroke-linecap="round">
+        <path d="M0,0 Q-14,-18 -22,-32"/>
+        <path d="M0,0 Q15,-16 25,-28"/>
+        <path d="M0,0 Q20,10 32,16"/>
+        <path d="M0,0 Q-18,14 -28,24"/>
+        <path d="M0,0 Q-2,-22 -4,-36"/>
+      </g>
+      <ellipse cx="-22" cy="-32" rx="4.2" ry="2.1" transform="rotate(-35 -22 -32)" fill="#b87b1e"/>
+      <ellipse cx="25" cy="-28" rx="4.2" ry="2.1" transform="rotate(35 25 -28)" fill="#b87b1e"/>
+      <ellipse cx="32" cy="16" rx="4.2" ry="2.1" transform="rotate(25 32 16)" fill="#b87b1e"/>
+      <ellipse cx="-28" cy="24" rx="4.2" ry="2.1" transform="rotate(-40 -28 24)" fill="#b87b1e"/>
+      <ellipse cx="-4" cy="-36" rx="4.2" ry="2.1" transform="rotate(80 -4 -36)" fill="#b87b1e"/>
+      <path d="M0,0 Q4,-12 8,-22" stroke="#c5d483" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <circle cx="8" cy="-22" r="2.6" fill="#e5ebb2"/>
+    </g>
+  </svg>
+
+ <img src="bunny.gif.gif" alt="Decorative bunny" class="shield">
+  <div class="wrap">
+    <p class="byline">Cybersecurity A | Student project</p>
+    <h1 id="siteTitle">Data Breaches,Corporate Responsibilities and Phishing</h1>
+    <!-- Use your first name or an alias. Do NOT put your last name, school name, photos of yourself, phone, or address on a public site. -->
+    <p class="byline">By <strong>Ari and Keira</strong></p>
+    <ul class="chips">
+      <li><b>Ethics topic:</b> Data breaches and Corporate responsibilities
+      <li><b>Attack topic:</b> Phishing</li>
+      <li><b>Security+ objective:</b> SY0-701+ 5.6</li>
+      <li><b>Control type:</b> Preventive</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="ethics" class="card" style="background: linear-gradient(rgba(255, 245, 228, 0.72), rgba(255, 245, 228, 0.72)), url('ethics-bg.jpg') center / cover no-repeat; color: #381c26;">
+    <h2>Introduction</h2>
+    <p>Our website covers the impact of phishing and data breaches and corperate responsibilities. This topic is important because we think that many people in the world are uneducated about these topics. These topics are very serious and can end up taking millions and even billions of dollars. So we are here to help you gain the knowledge that you need to know about keeping your personal information safe.</p>
+    <div class="keyidea"><strong>Key idea in one sentence:</strong> The importance of Phishing and Data breaches coporate responsibilities </div>
+  </section>
+
+  <section class="card" id="ethics">
+    <h2>The Ethics</h2>
+    <p><strong>Ethics topic:</strong> Data breaches and Corporate responsibilities</p>
+    <p><strong>The ethical question:</strong> After a breach, what do companies owe the people whose data was stolen.This matters to everyday people because many people trust companies with their login information and personal data
+.</p>
+    <h3>Who is helped and who is harmed?</h3>
+    <ul>
+      <li> The people who are helped  are the users/clients using the company's website.</li>
+      <li>The people who are harmed are the people whose information and data was exposed.</li>
+      <li>Othe groups affected are parnership and supply chains, the company and their reputation, and investors and shareholders.</li>
+    </ul>
+    <h3>What the law or a professional code says</h3>
+    <p>Breach Notification Laws: When a data breach has happened, you have to let consumers/users know that their data is no longer confidential.
+Internal Privacy Codes of Conduct: Legal obligations that apply on a day-to-day basis. Handling rulers for employees and vendors.</p>
+    <h3>Real-world example</h3>
+    <p>North Korea Data Breach
+-$6.3 Billion Stolen
+-Fake LinkedIn Job Application, it convinced them to download what looked like a legitimate file but it was malicious
+-Out of the $6.3 Billion dollars stolen, $2.7 to $3 Billion was frozen.</p>
+    <h3>My position</h3>
+    <p>We take the customers' side, the ones of whom the data is now exposed.
+<h3>Reason 1:</h3>
+<p>Companies should be able to detect and revert to normal circumstances.</p>
+<h3>Reason 2:</h3>
+<p>The company should be secure in the first place, the customers trust the company and if their data is gone, they should also trust the company to be able to tell them. Integrity.</p>
+    <h3>The other side</h3>
+    <p>Our strongest argument might be the company saying “Users should have read the terms and conditions.”
+Yes, maybe the user should have known the risks of having their information on this. Yes, big sites like LinkedIn may look reliable but we have to know that not all sites the people know are safe, for example, YouTube could try to sell you stuff. Just because lots of users are currently using it doesn’t mean that it is safe. In addition, you cannot expect for the user to read your small print long paged essay about how you are attacking my hardware.</p>
+  </section>
+
+  <section class="card attack-card" id="attack">
+    <h2><span class="tag attack">ATTACK</span> The Attack</h2>
+    <p><strong>Attack topic:</strong> Phishing &nbsp;|&nbsp; <strong>Security+ category:</strong> Installing Malware+ Social Engineering Scam</p>
+    <p>The attack targets the user's personal information such as credit card numbers, social security number, and as well as your identity. </p>
+    <h3>Real-world example</h3>
+    <p>North Korea Data Breach
+Date: October 29th 2026
+North Korea Data Breach
+-$6.3 Billion Stolen
+-Fake LinkedIn Job Application, it convinced them to download what looked like a legitimate file but it was malicious
+-Out of the $6.3 Billion dollars stolen, $2.7 to $3 Billion was frozen. This attack targeted currency, specifically Korea's type of currency. </p>
+
+    <!-- REQUIRED PICTURE
+         1. Make your OWN diagram of the attack and the protection (Google Drawings, Canva, draw.io, or PowerPoint) and export it as a PNG.
+         2. Name it with lowercase letters and no spaces, like attack-diagram.png.
+         3. UPLOAD it to this repository: open the repository on github.com, click Add file > Upload files, drag the PNG in, then click Commit changes.
+            If you skip the upload, your picture will NOT appear on your site.
+         4. Change the src below from the gray placeholder to your file name (exactly the same spelling, including .png), delete the word data-placeholder, and write real alt text and a caption.
+         No photos of people. If you use anything made by someone else, credit them in your Sources. -->
+  <figure>
+  <img src="phishing-diagram.png" alt="Diagram explaining how phishing works and where protection stops the attack">
+  <figcaption>How phishing attacks steal data and where preventative security stops them.</figcaption>
+</figure>
+"The attack targets the user's personal information such as credit card numbers, social security number, and as well as your identity. 
+Create a deceptive message that creates urgency, curiosity, and pressure. Make them believe that you need to download something or make them click a link. You have to be persuasive!
+Attach the link to download the attachment then boom, the user clicks it and you have their data.
+You now have usernames, passwords, credit card numbers, social security numbers, and more. You could get your identity stolen and then that’s it."
+      <figcaption>This diagram shows how phishing works, this diagram is made by Keira</figcaption>
+    </figure>
+    <p class="bad" id="picError" hidden>Your picture did not load. Check that you uploaded the file to your repository, that you clicked Commit changes, and that the file name in src matches exactly (lowercase, including .png).</p>
+    </div>
+  </section>
+
+<section id="protection" class="card defense-card">
+  <h2><span class="tag defense">FIX</span> The Patch or Protection</h2>
+  <p><strong>Fix / control:</strong> Apply anti-phishing software. | <strong>Type:</strong> preventive</p>
+  <p>Anti-phishing software can reduce the attack by lessening the chances of getting hacked. The person responsible for applying it is the user.</p>
+
+
+
+  <div class="protection-split">
+    <div>
+      <h3>What you can do today</h3>
+      <ul class="todo">
+        <li><label><input type="checkbox"> Create unique passwords</label></li>
+        <li><label><input type="checkbox"> Update your devices</label></li>
+        <li><label><input type="checkbox"> Use MFA (multi-factor authentication)</label></li>
+      </ul>
+      <p class="todo-status">0 of 3 done</p>
+    </div>
+
+    <img src="lily-cutout.png" alt="Pink double lily" style="width: 100px; max-width: 100px; height: auto; border: none; border-radius: 0;">
+  </div>
+</section>
+
+<section class="card" id="thanks" style="margin: 2rem 0; background-color: #fff6f8; background-image: radial-gradient(#f9c2d1 2.5px, transparent 2.5px), radial-gradient(#f9c2d1 2.5px, #fff6f8 2.5px); background-size: 28px 28px; background-position: 0 0, 14px 14px; color: #381c26; text-align: center;">
+  <h2 style="font-family: 'Limelight', sans-serif; letter-spacing: 0.03em; color: #381c26;">Thank you for reading our website!</h2>
+  <p><strong>(｡· ⩊ ·｡)</strong><br><br> ──── ୨୧ ──── </p>
+  <h3>I hope this website expanded your information on our topics!<h3>
+  <h3>♡Thank you♡</h3>
+</section>
+
+
+
+
+  <section class="card" id="sources">
+    <h2>Sources</h2>
+    <ol class="sources" id="sourceList">
+      <li>FBI North Korea Responsible for $6 Billion+ Binance Attack 11/9/26 <a href="https://www.fbi.gov/investigate/cyber/alerts/2026/north-korea-responsible-for-6-billion-binance-attack
+">click here for link</a></li>
+      <li>Kroll 7 out of 10 Individuals Hit by Data Breaches Via Third Party 11/9/26 <a href="https://www.kroll.com/en/newsroom/7-out-of-10-individuals-hit-by-data-breaches-via-third-party">click here for link</a></li>
+</li>
+      <li>Federal Trade Commission Equifax Data Breach Settlement 11/3/26 <a href="https://www.trendmicro.com/en_us/what-is/phishing/types-of-phishing.html ">click here for link</a></li>
+      <li>Eva Chen - Co founder of Trendmicro What Are The Different Types Of Phishing 11/10/26 <a href="https://www.cisa.gov/secure-our-world/recognize-and-report-phishing ">click here for link</a></li>
+      <li>America’s Cyber Defense Agency Recognize and report phishing 11/17/26 <a href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement">click here for link</a></li>
+      <li> IBM What is Phishing? 11/18/26 <a href="https://www.ibm.com/think/topics/phishing ">click here for link</a></li>
+    </ol>
+  </section>
+
+
+  <!-- PAGE CHECK: Run this before you submit. You may delete this whole section when your page passes. -->
+  <section class="checker" id="checker">
+    <h2>Page check</h2>
+    <p>Press the button to see if your page is ready to turn in.</p>
+    <button type="button" id="checkBtn" class="primary">Run page check</button>
+    <ul id="checkResults" aria-live="polite"></ul>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Student project for Cybersecurity A. This page explains concepts for education only. No real systems were tested or attacked.</div>
+</footer>
+
+<script>
+/* =====================================================================
+   STEP 1: EDIT ONLY THIS BLOCK. Keep the quote marks, commas, and brackets.
+   Replace every REPLACE with your own writing.
+   ===================================================================== */
+const PROJECT = {
+
+
+  // The story of your attack, in order. Use phase "attack" (red) or "defense" (green).
+  // Include at least 3 attack steps and at least 1 defense step.
+  steps: [
+    { phase: "attack",  title: "The Message", text: "The attacker creates a deceptive message that creates urgency, curiosity, and pressure." },
+    { phase: "attack",  title: "The Persuasion Method", text: "Once the user is persuaded from the message, they will be questioning the message and will be more willing to press the link." },
+    { phase: "attack",  title: "The Damages", text: "Once the user clicks the link, the attacker now has their personal information like usernames, passwords, and social security numbers." },
+    { phase: "defense", title: "How to Stay Away", text: "People who use the internet should know a little bit about phishing, because it helps protect you from attacks like this. By doing this you can expand your knowledge on keeping your devices safe, and that is what our website is for!" }
+  ],
+
+  // Three things a student can do today.
+  todo: [
+    "Create unique passwords",
+    "Update your devices",
+    "Use MFA (multi-factor authentication)"
